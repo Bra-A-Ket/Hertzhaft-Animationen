@@ -21,6 +21,7 @@ Du benötigst:
 - Matplotlib
 - NumPy
 - SciPy
+- SymPy
 
 Du kannst direkt [Python](https://www.python.org) mit Version 3 auf deinem
 Betriebssystem installieren. Achte im Installationsmenü darauf, dass du pip
@@ -36,8 +37,8 @@ verwendet habe. Installiere diese im Terminal mit
 ```console
 python -m pip install name
 ```
-wobei du name mit matplotlib, numpy und scipy ersetzt. Du musst diesen Befehl
-also 3-mal hintereinander auführen und zwischendurch warten, bis die
+wobei du name mit matplotlib, numpy, scipy und sympy ersetzt. Du musst diesen
+Befehl also 4-mal hintereinander auführen und zwischendurch warten, bis die
 Installation abgeschlossen ist.
 
 Alternativ kannst du dir auch eine komplette IDE installieren wie
