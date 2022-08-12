@@ -7,6 +7,10 @@ Du kannst in der main()-Funktion die Entwicklungsstelle x0, die maximale
 Ordnung der Taylor-Polynome N, die x-Achsen Begrenzungen xmin/xmax sowie die
 analytische Funktion y einstellen. Mittels Slider im Plotfenster wird
 das Taylor-Polynom der entsprechenden Ordnung angezeigt.
+
+Nutzung:
+- An den Reglern koennen die folgenden Groessen eingestellt werden:
+  * Grad vom angezeigten Taylor-Polynom
 """
 
 
@@ -25,8 +29,9 @@ def main():
     xmin = -2                                       # Untere x-Achsengrenze
     xmax = 2                                        # Obere x-Achsengrenze
     y = exp(-x**2)                                  # Funktion
+    nums = 1000                                     # Aufloesung vom xarr
     # Aenderbare Parameter -- ENDE
-    
+
     print(__doc__)
     labels = ["x0", "N", "xmin", "xmax", "y"]
     values = [x0, N, xmin, xmax, y]
@@ -43,7 +48,7 @@ def main():
         deriv = lambdify(x, y, "numpy")
         derivatives.append(deriv(x0))
 
-    xarr = np.linspace(xmin, xmax, 1000)            # x-array zum plotten
+    xarr = np.linspace(xmin, xmax, nums)            # x-array zum plotten
     plots = [np.ones(len(xarr))*derivatives[0]]     # Liste aus arrays, jedes
                                                     # array ist ein Taylor-Pol.
 
