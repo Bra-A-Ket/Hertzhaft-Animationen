@@ -1,7 +1,7 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from sympy import *
-from matplotlib.widgets import Slider
+from matplotlib.widgets import Slider, RadioButtons
 
 def main():
     x = Symbol("x")
@@ -9,7 +9,7 @@ def main():
     # Aenderbare Parameter
     x0 = 0                                          # Entwicklungsstelle
     N = 101                                          # Max. Ordnung
-    xmin = 0                                        # Untere x-Achsengrenze
+    xmin = -2                                        # Untere x-Achsengrenze
     xmax = 2                                        # Obere x-Achsengrenze
     num = 100
     y = x**2                                        # Funktion
@@ -20,9 +20,10 @@ def main():
 
     fig = plt.figure()
     ax = fig.add_subplot(111)
-    fig.subplots_adjust(bottom=0.25)                # Platz fuer Regler
+    fig.subplots_adjust(bottom=0.35)                # Platz fuer Regler
 
     plotsUntersumme = []
+    plotsObersumme = []
     xarrUntersumme = []
     untersumme = []
     # Treppenfunktionen
@@ -30,23 +31,26 @@ def main():
         dx = (xmax - xmin) / i
         xstep = np.arange(xmin, xmax+dx, dx)
         xarrUntersumme.append(xstep)
-        plot = np.ones(len(xstep))
+        plotUS = np.ones(len(xstep))
+        plotOS = np.ones(len(xstep))
         if len(xstep) == 1:
-            plot[0] = np.min(f(np.linspace(xmin, xmax, num)))
+            plotUS[0] = np.min(f(np.linspace(xmin, xmin+dx, num)))
+            plotOS[0] = np.max(f(np.linspace(xmin, xmin+dx, num)))
         else:
             for j in range(len(xstep)-1):
-                interval = np.linspace(xstep[j], (j+1)*dx, num)
-                value = np.min(f(interval))
-                plot[j] = value
-        plotsUntersumme.append(plot)
+                interval = np.linspace(xstep[j], xstep[j+1], num)
+                valueUS = np.min(f(interval))
+                valueOS = np.max(f(interval))
+                plotUS[j] = valueUS
+                plotOS[j] = valueOS
+        plotsUntersumme.append(plotUS)
+        plotsObersumme.append(plotOS)
 
 
 
-    # Standardplot
-    ax.plot(xarr, f(xarr))
-    ax.step(xarrUntersumme[0], plotsUntersumme[0], where="post", c="orange")
 
-    axOrder = plt.axes([0.25, 0.15, 0.45, 0.03])
+
+    axOrder = plt.axes([0.1, 0.25, 0.8, 0.03])
     orderSlider = Slider(axOrder, r"$N$", 0, N-1, valinit=0, valstep=1,
                         valfmt="%0.0f")
 
@@ -55,14 +59,46 @@ def main():
         """
         ax.lines.pop(-1)
         i = int(orderSlider.val)
-        ax.step(xarrUntersumme[i], plotsUntersumme[i], where="post", c="orange")
-        #ax.set_title(r"Taylor-Polynom für $N={}$".format(int(i)))
+        if radio.value_selected == "Untersumme":
+            ax.step(xarrUntersumme[i], plotsUntersumme[i], where="post", c="orange")
+        else:
+            ax.step(xarrUntersumme[i], plotsObersumme[i], where="post", c="orange")
         fig.canvas.draw_idle()
 
     orderSlider.on_changed(update)
 
+    rax = plt.axes([0.1, 0.03, 0.2, 0.2])
+    radio = RadioButtons(rax, ("Obersumme", "Untersumme"), active=0)
+
+    def radiobuttonFunc(label):
+        orderSlider.reset()
+        ax.lines.pop(-1)
+        if radio.value_selected == "Untersumme":
+            ax.step(xarrUntersumme[0], plotsUntersumme[0], where="post", c="orange")
+        else:
+            ax.step(xarrUntersumme[0], plotsObersumme[0], where="post", c="orange")
+        fig.canvas.draw_idle()
+    radio.on_clicked(radiobuttonFunc)
+
+    # Standardplot
+    ax.plot(xarr, f(xarr))
+    if radio.value_selected == "Untersumme":
+        ax.step(xarrUntersumme[0], plotsUntersumme[0], where="post", c="orange")
+    else:
+        ax.step(xarrUntersumme[0], plotsObersumme[0], where="post", c="orange")
+
+    # Textbox
+    textstr = "\n".join((
+        "Exakt = %.2f" % (orderSlider.val, ),
+        "Obersumme = ",
+        "Untersumme = "
+    ))
+    props = dict(boxstyle="square", facecolor="wheat", alpha=0.5)
+    ax.text(0.25, -0.25, textstr, transform=ax.transAxes, fontsize=14, verticalalignment="top", bbox=props)
+
     ax.set_xlim([xmin, xmax])
-    ax.set_ylim([np.min(f(xarr)), np.max(f(xarr))])
+    dy = (np.max(f(xarr)) - np.min(f(xarr)))*0.025
+    ax.set_ylim([np.min(f(xarr))-dy, np.max(f(xarr))+dy])
 
     plt.show()
 
