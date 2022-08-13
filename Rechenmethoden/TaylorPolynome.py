@@ -74,14 +74,14 @@ def main():
 
         i = orderSlider.val
         taylor.set_ydata(plots[int(i)])
-        ax.set_title(r"Taylor-Polynom für $N={}$".format(int(i)))
+        ax.set_title(r"Taylor-Polynom fuer $N={}$".format(int(i)))
         fig.canvas.draw_idle()
 
     orderSlider.on_changed(update)
 
     ax.grid(True)
     ax.set_xlim([xmin, xmax])
-    ax.set_title(r"Taylor-Polynom für $N=0$")
+    ax.set_title(r"Taylor-Polynom fuer $N=0$")
 
     plt.show()
 
