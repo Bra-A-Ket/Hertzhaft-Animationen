@@ -1,13 +1,21 @@
 """Kepler-Problem
 --------------
-Dieses Programm erzeugt eine schematische Visualisierung vom 2-Koerper-Kepler-
-Problem. Theoretische Details sind in Hertzhaft Volume 2 den Abschnitten 1.12,
-1.13 und 1.15 zu entnehmen.
+Dieses Programm erzeugt eine schematische Visualisierung vom 2-Koerper-Kepler-Problem. Theoretische Details sind in Hertzhaft
+Volume 2 den Abschnitten 1.12, 1.13 und 1.15 zu entnehmen.
 Die rote Kurve zeigt die Trajektorie in der z=0-Ebene der Masse m, die blaue
 Kurve entspricht der Masse M. Im Koordinatenursprung liegt der Schwerpunkt.
 In Relativkoordinaten r lautet die Kurve:
 
 r(phi) = p / (1 + epsilon*cos(phi))
+
+Einstellungen in der main()-Funktion:
+- p0: Mass fuer mittleren Radius (Standardwert)
+- epsilon0: Regelt die Form der Bahnkurve (Standardwert)
+- m0: Masse von einem Himmelskoerper (Standardwert)
+- N: Diskretisierungszahl
+- T: Maximale Zeit
+- interval: Schnelligkeit der Animation
+- l: Halbe Koordinatenachsenlaenge
 
 Nutzung:
 - An den Reglern koennen die folgenden Groessen eingestellt werden:
@@ -81,9 +89,8 @@ def phi_dot(phi, t, p, epsilon):
 
 
 def polar_to_cart(phi, r):
-    """Berechnet aus Polar- die kartesischen Koordinaten. Nimmt dabei an, dass
-    phi und r Arrays sind, wobei der Winkel phi[i] jeweils zum Radius r[i]
-    gehoert.
+    """Berechnet aus Polar- die kartesischen Koordinaten. Nimmt dabei an, dass phi und r Arrays sind, wobei der Winkel phi[i]
+    jeweils zum Radius r[i] gehoert.
 
     Parameter
     ---------
@@ -109,9 +116,8 @@ def polar_to_cart(phi, r):
 
 
 def position_vectors(x, y, m):
-    """Umrechnung der Relativkoordinaten in die Ortsvektoren der beiden Koerper
-    Nimmt an, dass die Relativkoordinaten in kartesischen Koordinaten x, y
-    gegeben sind. (Beachte, dass M=1 normiert wurde.)
+    """Umrechnung der Relativkoordinaten in die Ortsvektoren der beiden Koerper. Nimmt an, dass die Relativkoordinaten in
+    kartesischen Koordinaten x, y gegeben sind. (Beachte, dass M=1 normiert wurde.)
 
     Parameter
     ---------
@@ -139,18 +145,17 @@ def position_vectors(x, y, m):
 
 
 def main():
-    """Anfangsbedingungen: varphi0=0 und uTildeMax=1. Grosse Masse wurde auf
-    M=1 gesetzt. Gravitationskonstante wurde auch G=1 gesetzt.
+    """Anfangsbedingungen: varphi0=0 und uTildeMax=1. Grosse Masse wurde auf M=1 gesetzt. Gravitationskonstante wurde auch
+    G=1 gesetzt.
     """
     # Aenderbare Parameter
-    p0 = 1                                          # Default p
-    epsilon0 = 0.5                                  # Default epsilon
-    m0 = 0.2                                        # Default m
-    N = 1000                                        # Diskretisierungszahl
-    T = 20                                          # Maximale Zeit
-    interval = 1                                    # Schnelligkeit der Animat.
-    l = 2                                           # Halbe Koordinatenachsen-
-                                                    # laenge
+    p0 = 1                                                                              # Default p
+    epsilon0 = 0.5                                                                      # Default epsilon
+    m0 = 0.2                                                                            # Default m
+    N = 1000                                                                            # Diskretisierungszahl
+    T = 20                                                                              # Maximale Zeit
+    interval = 1                                                                        # Schnelligkeit der Animat.
+    l = 2                                                                               # Halbe Koordinatenachsenlaenge
     # Aenderbare Parameter -- ENDE
 
     print(__doc__)
@@ -166,7 +171,7 @@ def main():
     # Initialisiere Plot
     fig = plt.figure()
     ax = fig.add_subplot(111, aspect="equal")
-    fig.subplots_adjust(bottom=0.3)                # Platz fuer Regler
+    fig.subplots_adjust(bottom=0.3)                                                 # Platz fuer Regler
 
     # Default Plot
     x, y = polar_to_cart(phi, r(phi, p0, epsilon0))
@@ -207,7 +212,7 @@ def main():
         """Wird aufgerufen, wenn Slider bewegt werden. Berechnet Bahnkurven neu
         """
 
-        ax.lines = []                               # Loesche vorherige Plots
+        ax.lines = []                                                                   # Loesche vorherige Plots
         p = pSlider.val
         epsilon = epsilonSlider.val
         m = massratioSlider.val
@@ -225,7 +230,7 @@ def main():
         pSlider.reset()
         epsilonSlider.reset()
         massratioSlider.reset()
-        anim.event_source.stop()                    # Stoppt Animation
+        anim.event_source.stop()                                                        # Stoppt Animation
 
     def animate(i, x1, y1, x2, y2):
         """Animiert Kreise durch das Neusetzen vom Mittelpunkt der Kreise.
@@ -241,11 +246,11 @@ def main():
         """
 
         if i == 0:
-            ax.add_patch(mCircle)                   # Erstmalig Kreise anzeigen
-            ax.add_patch(MCircle)                   # fuer Anfangswerte
+            ax.add_patch(mCircle)                                                       # Erstmalig Kreise anzeigen
+            ax.add_patch(MCircle)                                                       # fuer Anfangswerte
 
-        mCircle.center = (x1[i], y1[i])             # Neue Position
-        MCircle.center = (x2[i], y2[i])             # der Kreise
+        mCircle.center = (x1[i], y1[i])                                                 # Neue Position
+        MCircle.center = (x2[i], y2[i])                                                 # der Kreise
 
         return mCircle, MCircle,
 
@@ -262,11 +267,9 @@ def main():
         r_t_1 = r(phi_t_1, p, epsilon)
         x, y = polar_to_cart(phi_t_1, r_t_1)
         x1, y1, x2, y2 = position_vectors(x, y, m)
-        global anim                                 # damit Animation gestoppt
-                                                    # werden kann ausserhalb
-        anim = animation.FuncAnimation(fig, animate, frames=N,
-                                        interval=interval, blit=True,
-                                        fargs=(x1,y1,x2,y2))
+        global anim                                                                     # damit Animation gestoppt
+                                                                                        # werden kann ausserhalb
+        anim = animation.FuncAnimation(fig, animate, frames=N, interval=interval, blit=True, fargs=(x1,y1,x2,y2))
 
 
     # Slider, Button Funktionen geben
