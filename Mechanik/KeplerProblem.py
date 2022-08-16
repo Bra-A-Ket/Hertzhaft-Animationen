@@ -148,6 +148,7 @@ def main():
     """Anfangsbedingungen: varphi0=0 und uTildeMax=1. Grosse Masse wurde auf M=1 gesetzt. Gravitationskonstante wurde auch
     G=1 gesetzt.
     """
+
     # Aenderbare Parameter
     p0 = 1                                                                              # Default p
     epsilon0 = 0.5                                                                      # Default epsilon
@@ -172,7 +173,7 @@ def main():
     fig = plt.figure()
     fig.canvas.set_window_title("Mechanik/KeplerProblem.py")
     ax = fig.add_subplot(111, aspect="equal")
-    fig.subplots_adjust(bottom=0.3)                                                 # Platz fuer Regler
+    fig.subplots_adjust(bottom=0.3)                                                     # Platz fuer Regler
 
     # Default Plot
     x, y = polar_to_cart(phi, r(phi, p0, epsilon0))
