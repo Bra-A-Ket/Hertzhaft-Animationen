@@ -50,6 +50,7 @@ def main():
 
     # Plot initiieren
     fig = plt.figure()
+    fig.canvas.set_window_title("Rechenmethoden/RiemannIntegral.py")
     ax = fig.add_subplot(111)
     fig.subplots_adjust(bottom=0.35)                                                    # Platz fuer Regler
 

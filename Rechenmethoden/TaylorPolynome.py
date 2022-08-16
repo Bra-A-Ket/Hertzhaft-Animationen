@@ -59,6 +59,7 @@ def main():
         plots.append(func)
 
     fig = plt.figure()
+    fig.canvas.set_window_title("Rechenmethoden/TaylorPolynome.py")
     ax = fig.add_subplot(111)
     fig.subplots_adjust(bottom=0.25)                                                    # Platz fuer Regler
 

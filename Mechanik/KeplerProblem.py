@@ -170,6 +170,7 @@ def main():
 
     # Initialisiere Plot
     fig = plt.figure()
+    fig.canvas.set_window_title("Mechanik/KeplerProblem.py")
     ax = fig.add_subplot(111, aspect="equal")
     fig.subplots_adjust(bottom=0.3)                                                 # Platz fuer Regler
 
