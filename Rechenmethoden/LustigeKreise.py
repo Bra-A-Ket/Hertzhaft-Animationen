@@ -51,7 +51,7 @@ def main():
     N = 1000                                                                            # Diskretisierungszahl
     pmin = 0.3                                                                          # minimales p am Slider
     pmax = 7                                                                            # maximales p am Slider
-    p0 = 1                                                                              # Anfangswert fuer p am Slider
+    p0 = 2                                                                              # Anfangswert fuer p am Slider
     # Aenderbare Parameter -- ENDE
 
     print(__doc__)
