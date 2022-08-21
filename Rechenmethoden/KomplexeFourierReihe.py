@@ -192,7 +192,7 @@ def main():
     ani = animation.FuncAnimation(fig, animate, frames=len(time), interval=2, blit=True, repeat=True)
 
     if saveAni:
-        ani.save("KomplexeFourierReihe_Animation.gif", dpi=300, writer=PillowWriter(fps=25))
+        ani.save("out.gif", dpi=300, writer=PillowWriter(fps=25))
 
     plt.show()
 
