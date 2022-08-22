@@ -6,27 +6,29 @@ In blau ist f(t) und in orange die Partialsumme bis zu einer gewissen Ordnung de
 Die einzelnen schwarzen Pfeile sind die Summanden
 c_n * exp(-i*w*t) mit Frequenz w_n = 2*pi*n (n ist integer),
 wobei diese wie folgt sortiert sind: n=0, 1, -1, 2, -2, ...
-Demnach ist der erste Pfeil fuer n=0 zeitlich konstant. Diese Animation zeigt, wie das Aneinanderhaengen von Pfeilen (bzw.
-Addition komplexer Zahlen entsprechend den Termen der Fourier-Reihe) zusammen mit einer konstanten Rotationsfrequenz w_n
-das approximative Nachzeichnen der Eingangsfunktion f(t) ermoeglicht.
+Demnach ist der erste Pfeil fuer n=0 zeitlich konstant. Die Pfeile fuer n=1,-1 haben betraglich dieselbe Frequenz, drehen
+sich aber in entgegengesetzte Richtung. Die Pfeile fuer n=2,-2 sind etwas schneller und drehen sich entgegengesetzt; usw.
+Diese Animation zeigt, wie das Aneinanderhaengen von Pfeilen (bzw. Addition komplexer Zahlen entsprechend den Termen
+der Fourier-Reihe) zusammen mit einer konstanten Rotationsfrequenz w_n fuer konstantes n das approximative Nachzeichnen der
+Eingangsfunktion f(t) ermoeglicht.
 
 Einstellungen in der main()-Funktion:
 - T: Periodenlaenge
 - N: Stuetzpunkte fuer Diskretisierung
 - iter: Betraglich max. Iterationszahl
 - f: Funktion, von der die Fourier-Reihe berechnet werden soll
-- saveAni: Gibt an ob Animation gepeichert werden soll als .gif oder nicht (True/False)
+- showCircles: Sollen Kreise um Pfeile angezeigt werden? (True/False)
 
 Nutzung:
 - Ggf. oben genannte Parameter individuell in der main()-Funktion einstellen
 - Beachte, dass 'func = lambda x: yeti(x)' gesetzt werden kann, um einen Yeti als Eingangsfunktion zu verwenden
-- Die Datei 'KomplexeFourierReihe_Animation.gif' zeigt diesen Yeti in der Animation fuer iter = 50 und N = 1000
+- Beachte die folgenden Datein: Yeti_slow.mp4 und Yeti_fast.mp4, fuer iter=50 und N=1000 einen Yeti nachzeichnen, jeweils
+  langsam bzw. schnell abgespielt.
 
 ----------
 |ACHTUNG:|
 ----------
 Je nach Eingangsfunktion, iter und N kann die Berechnung zur Animation einige Zeit in Anspruch nehmen!
-(Vergleich: Auf meinem Rechner dauerte die yeti-Kurve fuer iter = 50 und N = 1000 ca. 12 Minuten)
 """
 
 import numpy as np
@@ -36,7 +38,6 @@ from YetiCurve import *
 from matplotlib import animation
 from matplotlib.animation import PillowWriter
 import matplotlib.patches as patches
-from time import sleep
 
 def f(t):
     """Testfunktion, bei der die Fourier-Reihe nach endlich vielen Termen exakt ist.
@@ -140,13 +141,13 @@ def main():
     N = 1000                                                                            # Diskretisierungszahl
     iter = 3                                                                            # Betraglich max. Iterationszahl
     func = lambda t: f(t)                                                               # Funktion
-    # func = lambda t: yeti(t)                                                          # Falls Yeti geplottet werden soll :D
-    saveAni = False                                                                     # Animation speichern als .gif?
+    #func = lambda t: yeti(t)                                                           # Falls Yeti geplottet werden soll :D
+    showCircles = True                                                                  # Kreise anzeigen? (True/False)
     # Aenderbare Parameter -- ENDE
 
     print(__doc__)
-    labels = ["T", "N", "iter", "saveAni"]
-    values = [T, N, iter, saveAni]
+    labels = ["T", "N", "iter"]
+    values = [T, N, iter]
     print("Aktuelle Parameter:")
     for lab, val in zip(labels, values):
         print(lab, " = ", val)
@@ -158,41 +159,40 @@ def main():
     ax = fig.add_subplot(111, aspect="equal")
     ax.set_title("Komplexe Fourier-Reihe")
     ax.plot(func(time).real, func(time).imag, zorder=-1)
-    ax.plot(all_fourier[-1].real, all_fourier[- 1].imag, zorder=0)
+    plot, = ax.plot(all_fourier[-1][0].real, all_fourier[-1][0].imag, zorder=0)
+    ax.set_xlabel("Realteil")
+    ax.set_ylabel("Imaginärteil")
 
 
     def animate(j):
         """Animiert die rotierenden Pfeile.
         """
+        objects = [plot]
 
-        arrows = []
-
-        # Pfeile aus dem vorherigen Zeitschritt muessen geloescht werden. Die ax.get_children() erstellt eine Liste ALLER
-        # Elemente im Plot-Fenster. Alle aufgelisteten ausser die ersten beiden und letzten 10 sind die Pfeile, die geloescht
-        # werden sollen, bevor sie einen Zeitschritt weiter neu geplottet werden sollen.
-        # Gibt es eine elegantere Loesung als diesen hard code? Ich habe nichts dazu gefunden...
-        children = ax.get_children()
-        for a in range(2, len(children)-10):
-            children[a].remove()
+        plot.set_xdata(all_fourier[-1][:j].real)
+        plot.set_ydata(all_fourier[-1][:j].imag)
 
         # Setze Pfeile aneinander und unterscheide, ob es bereits einen vorherigen gibt
         for i in range(len(all_fourier)):
             if i == 0:
                 arrow = ax.arrow(0, 0, all_fourier[i][j].real, all_fourier[i][j].imag, length_includes_head=True, color="k",
                                 zorder=1)
-                arrows.append(arrow)
+                objects.append(arrow)
             else:
                 delta = all_fourier[i][j] - all_fourier[i-1][j]
                 arrow = ax.arrow(all_fourier[i-1][j].real, all_fourier[i-1][j].imag, delta.real, delta.imag,
                                 length_includes_head=True, color="k", zorder=1)
-                arrows.append(arrow)
+                objects.append(arrow)
+                if showCircles:                                                         # Zeichne Kreise um Pfeile
+                    radius = np.sqrt(delta.real**2 + delta.imag**2)
+                    circle = plt.Circle((all_fourier[i-1][j].real, all_fourier[i-1][j].imag), radius=radius, fill=None,
+                                        ls="--", ec="gray", alpha=.2)
+                    ax.add_patch(circle)
+                    objects.append(circle)
 
-        return [arrow for arrow in arrows]
+        return [object for object in objects]
 
     ani = animation.FuncAnimation(fig, animate, frames=len(time), interval=2, blit=True, repeat=True)
-
-    if saveAni:
-        ani.save("out.gif", dpi=300, writer=PillowWriter(fps=25))
 
     plt.show()
 
