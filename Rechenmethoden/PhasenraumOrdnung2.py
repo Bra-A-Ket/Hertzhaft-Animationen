@@ -187,6 +187,9 @@ def main():
         vmax = v0 + l/2
         ax.set_xlim([xmin, xmax])
         ax.set_ylim([vmin, vmax])
+        ax.set_xlabel(r"$x$")
+        ax.set_ylabel(r"$\dot{x}$")
+        ax.set_title(r"$\dot{x}x$-Diagramm + Vektorfeld (Linksklick ins Diagramm)")
 
         x = np.linspace(xmin, xmax, int(N//mod))
         v = np.linspace(vmin, vmax, int(N//mod))

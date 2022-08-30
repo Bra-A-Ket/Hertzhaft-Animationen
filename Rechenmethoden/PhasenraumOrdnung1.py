@@ -212,6 +212,9 @@ def main():
         xmax = x0 + l/2
         ax.set_xlim([tmin, tmax])
         ax.set_ylim([xmin, xmax])
+        ax.set_xlabel(r"$t$")
+        ax.set_ylabel(r"$x$")
+        ax.set_title(r"$xt$-Diagramm + Vektorfeld (Linksklick ins Diagramm)")
 
         t = np.linspace(tmin, tmax, int(N//mod))
         x = np.linspace(xmin, xmax, int(N//mod))
