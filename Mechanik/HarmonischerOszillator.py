@@ -303,7 +303,7 @@ def main():
 
         x_max = np.sqrt(2*E/k)
 
-        # Erstelle temporaeren Kreis (siehe Problem im Kommentar ab Zeile 198)
+        # Erstelle temporaeren Kreis (siehe Problem im Kommentar ab Zeile 264)
         if createTemp:
             global temp                                                                 # Globale Variable unschoen ...
             temp = plt.Circle((scale*x_max, 0), radius=radius, fc="black", zorder=1)
