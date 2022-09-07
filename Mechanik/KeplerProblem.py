@@ -232,7 +232,10 @@ def main():
         pSlider.reset()
         epsilonSlider.reset()
         massratioSlider.reset()
-        anim.event_source.stop()                                                        # Stoppt Animation
+        try:
+            anim.event_source.stop()                                                    # Stoppt Animation
+        except:
+            pass
 
     def animate(i, x1, y1, x2, y2):
         """Animiert Kreise durch das Neusetzen vom Mittelpunkt der Kreise.
