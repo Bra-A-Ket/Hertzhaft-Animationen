@@ -165,8 +165,8 @@ def main():
     ax1Dot, = ax1.plot(t[0], x[0], marker=".", c="red")
 
     # Default-Plot fuer Diagramm rechts oben
-    E_kin_plot, = ax2.plot(t, E_kin, label="Kinetische Energie", c="C0")
-    V_plot, = ax2.plot(t, V, label="Potentialle Energie", c="orange")
+    E_kin_plot, = ax2.plot(t, E_kin, label="Kinetische Energie", c="orange")
+    V_plot, = ax2.plot(t, V, label="Potentialle Energie", c="C0")
     T_ax2_plot = ax2.axvline(T, label="Periodendauer", c="k")
     ax2EDot, = ax2.plot(t[0], E_kin[0], marker=".", c="red")
     ax2VDot, = ax2.plot(t[0], V[0], marker=".", c="red")
