@@ -22,6 +22,9 @@ Nutzung:
   * p: Reguliert den mittleren Radius der Kurve
   * epsilon: Reguliert die Art der Kurve (epsilon)
   * m/M: Massenverhaeltnis, wobei M=1 normiert wurde.
+- Zuerst Werte an den Slidern einstellen, danach auf den Start-Button druecken. Bevor neue Werte an den Slidern eingestellt
+  werden, bitte den Reset-Button betaetigen.
+- Bitte nicht mehrfach nacheinander auf denselben Button klicken :)
 """
 
 

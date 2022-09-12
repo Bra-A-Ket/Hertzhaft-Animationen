@@ -23,6 +23,9 @@ Nutzung:
 - An den Reglern koennen die folgenden Groessen eingestellt werden:
   * m: Masse
   * k: Federkonstante
+- Zuerst Werte an den Slidern einstellen, danach auf den Start-Button druecken. Bevor neue Werte an den Slidern eingestellt
+  werden, bitte den Reset-Button betaetigen.
+- Bitte nicht mehrfach nacheinander auf denselben Button klicken :)
 """
 
 
