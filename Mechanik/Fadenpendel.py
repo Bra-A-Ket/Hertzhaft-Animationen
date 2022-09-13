@@ -1,3 +1,33 @@
+"""Fadenpendel
+-----------
+Die Bewegungsgleichung fuer den Winkel eines physikalischen Fadenpendels ohne Reibung lautet
+phi''(t) = -(g/l) * sin(phi(t)).
+Dabei ist g die konstante Erdbeschleunigung und l die Laenge vom Pendel. Der Winkel phi wird von der Ruhelage ausgehend gegen
+den Uhrzeigersinn positiv gezaehlt.
+Links ist symbolisch die Schwingung vom Pendel zu sehen. Rechts wird der Winkel als Funktion der Zeit dargestellt. Die
+gestrichelte Kurve entpricht der Kleinwinkelnaeherung sin(phi)=phi (BGL -> harmonischer Oszillator). Die exakte Kurve
+bezeichnet die numerische Loesung der Bewegungsgleichung ohne diese Naeherung. Man erkennt, dass fuer kleine Winkel beide
+Kurven sehr aehnlich sind, waehrend das fuer grosse Winkel nicht mehr gilt.
+
+Einstellungen in der main()-Funktion:
+- phi0: Anfangsauslenkung in [Grad]
+- l0: Pendellaenge in [m]
+- g: Erdbeschleunigung in [m/s^2]
+- Tmax: Maximale Laufzeit in [s]
+- N: Diskretisierungszahl
+- lmin, lmax: Minimale/Maximale Pendellaenge am Slider
+
+Nutzung:
+- Ggf. oben genannte Parameter individuell in der main()-Funktion einstellen
+- An den Reglern koennen die folgenden Groessen eingestellt werden:
+  * l: Laenge vom Pendel
+  * y: Achsenlaenge der y-Achse fuer den rechten Plot
+- Werte an den Slidern einstellen
+- Linksklick auf die blaue Masse gedrueckt halten und Masse zu gewuenschtem Auslenkungswinkel ziehen. Anschliessen loslassen.
+- Nutzung vom linken Slider und erneute Auslenkung der Masse stoppt evtl. laufende Animation
+- Bitte nicht mehrfach nacheinander in das linke Plotfenster klicken :)
+"""
+
 import numpy as np
 from matplotlib import pyplot as plt
 import functools
@@ -6,17 +36,52 @@ from matplotlib import animation
 from matplotlib.widgets import Slider
 
 def deg_to_rad(angle):
+    """Umrechnung Gradmass zu Bogenmass
+
+    Parameter
+    ---------
+    angle : float
+        Winkel im Gradmass
+
+    Return
+    ------
+    Winkel im Bogenmass
+    """
+
     return angle*np.pi / 180
 
 def rad_to_deg(angle):
+    """Umrechnung Bogenmass zu Gradmass
+
+    Parameter
+    ---------
+    angle : float
+        Winkel im Bogenmass
+
+    Return
+    ------
+    Winkel im Gradmass
+    """
+
     return angle*180 / np.pi
 
 def mouse_move_event(event, ax, lSlider):
+    """Wird aufgerufen, wenn sich Maus im linken Plotfenster bewegt
 
+    Parameter
+    ---------
+        ax : matplotlib axis
+            Axis von linkem Pendel-Plot
+
+        lSlider : matplotlib slider
+            Slider fuer Laenge vom Pendel
+    """
+
+    # event.button == 1, da Linksklick erforderlich => Drag mit linker Maustaste
     mode = event.canvas.toolbar.mode
     if event.button == 1 and event.inaxes == ax and mode == "":
-        try:
-            anim.event_source.stop()
+        try:                                                                            # Falls Animation laeuft, stoppen
+            anim.event_source.stop()                                                    # und Pendel neu initialisieren
             ax1.patches = []
             ax1.lines = []
             ax1.axhline(0, c="k", lw=3)
@@ -31,8 +96,8 @@ def mouse_move_event(event, ax, lSlider):
         xpos = event.xdata
         ypos = event.ydata
         l = lSlider.val
-        massCirlce = ax.patches[-1]
-        line = ax.lines[-1]
+        massCirlce = ax.patches[-1]                                                     # Objekte nicht global definiert und
+        line = ax.lines[-1]                                                             # wegen anim.event_source.stop()
         line.set_visible(False)
 
         phi = np.arctan2(xpos, -ypos)
@@ -47,6 +112,34 @@ def mouse_move_event(event, ax, lSlider):
         event.canvas.draw()
 
 def mouse_release_event(event, fig, ax1, ax2, g, lSlider, t, approx, exact, dot):
+    """Wird aufgerufen, wenn Linksklick (Drag mit Maus) losgelassen wird. Starte dann Animation
+
+    Parameter
+    ---------
+    fig : matplotlib figure
+
+    ax1, ax2 : matplotlib axis
+        Linker, Rechter Plot
+
+    g : float
+        Erdbeschleunigung
+
+    lSlider : matplotlib
+        Slider fuer Pendellaenge
+
+    t : numpy array
+        Zeitenarray
+
+    approx : plot
+        Matplotlib plot fuer Kleinwinkelnaeherung phi(t)
+
+    exact : plot
+        Matplotlib plot fuer 'exakte' Loesung phi(t)
+
+    dot : plot
+        Matplotlib plot vom aktuellen Wert (roter Punkt im rechten Plot)
+    """
+
     mode = event.canvas.toolbar.mode
     if event.button == 1 and event.inaxes == ax1 and mode == "":
         xpos = event.xdata
@@ -68,13 +161,61 @@ def mouse_release_event(event, fig, ax1, ax2, g, lSlider, t, approx, exact, dot)
         N = len(t)
         massCirlce.set_visible(False)
         line.set_visible(False)
+
         global anim
-        anim = animation.FuncAnimation(fig, animate, frames=N, interval=10, blit=True, fargs=(t, phi_t, massCirlce, l, line, dot))
+        anim = animation.FuncAnimation(fig, animate, frames=N, interval=10, blit=True,
+                                        fargs=(t, phi_t, massCirlce, l, line, dot))
 
 def deriv(y, t, g, l):
+    """Bewegungsgleichung fuer physikalisches Pendel als DGL erster Ordnung: y(t):=(phi(t), phi'(t)) =>
+    y'(t)=(phi'(t), -(g/l)*sin(phi(t)))
+
+    Parameter
+    ---------
+    y : numpy array
+        Daten y(t):=(phi(t), phi'(t)) fuer aktuellen Zeitschritt
+
+    t : numpy array
+        Zeitenarray
+
+    g : float
+        Erdbeschleunigung
+
+    l : float
+        Pendellaenge
+
+    Return
+    ------
+    Rechte Seite der DGL 1. Ordnung
+    """
+
     return np.array([y[1], -g*np.sin(y[0])/l])
 
 def animate(i, t, phi_t, massCirlce, l, line, dot):
+    """Animiert schwingendes Pendel und roten Punkt im rechten Plot
+
+    Parameter
+    ---------
+    i : int
+        Position der Zeit t im Zeit-array time[i]
+        Ausgeloest durch frames=N in FuncAnimation
+
+    t : numpy array
+        Zeitenarray
+
+    phi_t : numpy array
+        Winkel bzw. Loesung der Bewegungsgleichung ohne Kleinwinkelnaeherung
+
+    l : float
+        Pendellaenge
+
+    line : matplotlib line
+        Pendelfaden
+
+    dot : matplotlib patch
+        Kreis, der die Masse darstellt
+    """
+
     x = l*np.sin(phi_t[i])
     y = -l*np.cos(phi_t[i])
     massCirlce.center = (x, y)
@@ -93,20 +234,28 @@ def animate(i, t, phi_t, massCirlce, l, line, dot):
     return massCirlce, line, dot,
 
 def main():
-    phi0 = 45
-    l0 = 0.75
-    g = 9.81
-    Tmax = 10
-    N = 1000
-    lmin = 0.2
-    lmax = 1
+    # Aenderbare Parameter
+    phi0 = 45                                                                           # Anfangsauslenkung in [Grad]
+    l0 = 0.75                                                                           # Pendellaenge in [m]
+    g = 9.81                                                                            # Erdbeschleunigung in [m/s^2]
+    Tmax = 10                                                                           # Max. Laufzeit in [s]
+    N = 1000                                                                            # Diskretisierungszahl
+    lmin = 0.2                                                                          # Minimale Pendellaenge in [m]
+    lmax = 1                                                                            # Maximale Pendellaenge in [m]
+    # Aenderbare Parameter -- ENDE
 
+    print(__doc__)
+    labels = ["phi0", "l0", "g", "Tmax", "N", "lmin", "lmax"]
+    values = [phi0, l0, g, Tmax, N, lmin, lmax]
+    print("Aktuelle Parameter:")
+    for lab, val in zip(labels, values):
+        print(lab, " = ", val)
 
     t = np.linspace(0, Tmax, N)
 
     # Initialisiere Plotfenster
     fig = plt.figure(figsize=(10,5))
-    fig.canvas.set_window_title("Mechanik/HarmonischerOszillator.py")
+    fig.canvas.set_window_title("Mechanik/Fadenpendel.py")
     ax1 = fig.add_subplot(121, aspect="equal")
     ax2 = fig.add_subplot(122)
     fig.tight_layout(pad=4)                                                             # Platz zwischen Subplots
@@ -138,8 +287,11 @@ def main():
     ySlider = Slider(axY, "y", 10, 90, valinit=phi0, valfmt="%2.2f" + "°")
 
     def update(val):
+        """Slider update Funktion
+        """
+
         l = lSlider.val
-        try:
+        try:                                                                            # Falls Animation bereits laeuft
             anim.event_source.stop()
             ax1.patches = []
             ax1.lines = []
@@ -170,6 +322,9 @@ def main():
         dot.set_ydata(rad_to_deg(phi_t[0]))
 
     def update_ySlider(val):
+        """Updatefunktion fuer rechten Slider, der nicht die Animation stoppt
+        """
+
         y = ySlider.val
 
         ax2.set_ylim([-y, y])
@@ -192,7 +347,8 @@ def main():
     on_move = functools.partial(mouse_move_event, ax=ax1, lSlider=lSlider)
     fig.canvas.mpl_connect("motion_notify_event", on_move)
 
-    on_release = functools.partial(mouse_release_event, fig=fig, ax1=ax1, ax2=ax2, g=g, lSlider=lSlider, t=t, approx=approx, exact=exact, dot=dot)
+    on_release = functools.partial(mouse_release_event, fig=fig, ax1=ax1, ax2=ax2, g=g, lSlider=lSlider, t=t, approx=approx,
+                                    exact=exact, dot=dot)
     fig.canvas.mpl_connect("button_release_event", on_release)
 
 
