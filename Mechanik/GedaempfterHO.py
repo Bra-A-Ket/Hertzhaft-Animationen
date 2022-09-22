@@ -1,7 +1,7 @@
 """Gedaempfter harmonischer Oszillator
 -----------------------------------
 Die Bewegungsgleichung 0=x''(t) + 2*gamma*x'(t) + omega0^2*x(t) mit den Anfangsbedingungen x(t0)=x0 und v(t0)=v0 stellt einen
-gedaempften harmonischen Oszillator dar. Man unterscheidet die drei Fälle: gamma <,=,> omega0. Dargestellt ist jeweils die
+gedaempften harmonischen Oszillator dar. Man unterscheidet die drei Faelle: gamma <,=,> omega0. Dargestellt ist jeweils die
 Loesung x(t) in blau und die Geschwindigkeit v(t) in orange im Diagramm.
 
 Einstellungen in der main()-Funktion:
@@ -36,7 +36,7 @@ from scipy.integrate import odeint
 
 
 def deriv(y, t, gamma, omega0):
-    """Bewegungsgleichung fuer gedaempften harmonischen Oszillator DGL erster Ordnung: y(t):=(x(t), x'(t)) =>
+    """Bewegungsgleichung fuer gedaempften harmonischen Oszillator als DGL erster Ordnung: y(t):=(x(t), x'(t)) =>
     y'(t)=(x'(t), -2*gamma*x'(t)-omega0**2*x(t))
 
     Parameter
@@ -99,7 +99,7 @@ def main():
     ax2 = ax1.twinx()                                                                   # Zweite y-Achse
     fig.subplots_adjust(bottom=0.35)                                                    # Platz fuer Regler
 
-    # Numerische Loesung damit nicht die Fallunterscheidung gemaess gamma, omega0 programmiert werden muss
+    # Numerische Loesung damit nicht die Fallunterscheidung gemaess gamma, omega0 & Anfangswerte programmiert werden muessen
     y0 = np.array([x0, v0])
     y = odeint(deriv, y0, t, args=(gamma, omega0))
     x_t = y[:, 0]
@@ -166,7 +166,7 @@ def main():
 
         x_plot.set_ydata(x_t)
         x_dot_plot.set_ydata(x_dot_t)
-        
+
         fig.canvas.draw_idle()
 
     omega0Slider.on_changed(update)
