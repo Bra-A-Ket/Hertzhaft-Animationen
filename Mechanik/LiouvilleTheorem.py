@@ -16,6 +16,8 @@ Einstellungen in der main()-Funktion:
 
 Nutzung:
 - Ggf. oben genannte Parameter individuell in der main()-Funktion einstellen
+- In der deriv-Funktion können verschiedene Hamilton-Bewegungsgleichungen ausgewaehlt werden
+- Der Contour-Plot der Phasenraumtrajektorien muss in Zeile 156 angepasst werden (todo: automatisch mit sympy?)
 """
 
 
@@ -46,8 +48,10 @@ def deriv(y, t, m, omega):
     ------
     Rechte Seite der DGL 1. Ordnung
     """
-
+    #return np.array([y[1]/m, -4*y[0]**3])                                               # Biqudratisches Potential
     return np.array([y[1]/m, -m*omega**2*y[0]])                                         # Harmonischer Oszillator
+    #return np.array([y[1], -y[1]])                                                      # Reibung
+    #return np.array([y[1]/m, -m*omega**2/(y[0]**2)])                                    # Zentralpotential
 
 
 def animate(i, plot, t, new_qs, new_ps, omega, m, text):
@@ -90,10 +94,10 @@ def main():
     m = 1                                                                               # Masse
     omega = 1                                                                           # Frequenz
     T = 10                                                                              # Maximale Zeit
-    N = 100                                                                             # Zeitdiskretisierungszahl
+    N = 1000                                                                            # Zeitdiskretisierungszahl
     q0 = 0                                                                              # Mittelpunkt vom Rechteck ...
-    p0 = 1                                                                              # ... der Phasenraumpunkte
-    n = 5                                                                               # Diskretisierungszahl der Punkte
+    p0 = 2                                                                              # ... der Phasenraumpunkte
+    n = 20                                                                              # Diskretisierungszahl der Punkte
     dq = 1                                                                              # Laenge bzw. ...
     dp = 1                                                                              # ... Hoehe vom Rechteck
     # Aenderbare Parameter -- ENDE
@@ -117,18 +121,15 @@ def main():
     pvals = np.array(pvals)
 
     # Loese numerisch die Hamilton-Bewegungsgleichungen
-    print("Das koennte einen Moment dauern...")
     new_qs = []
     new_ps = []
-    for q in qvals:
-        for p in pvals:
-            y0 = np.array([q, p])
-            y = odeint(deriv, y0, t, args=(m, omega))
-            new_qs.append(y[:, 0])
-            new_ps.append(y[:, 1])
+    for q, p in zip(qvals, pvals):
+        y0 = np.array([q, p])
+        y = odeint(deriv, y0, t, args=(m, omega))
+        new_qs.append(y[:, 0])
+        new_ps.append(y[:, 1])
     new_qs = np.array(new_qs)
     new_ps = np.array(new_ps)
-    print("Fertig!")
 
     # Initialisiere Plotfenster
     fig = plt.figure()
@@ -145,8 +146,20 @@ def main():
     ax.set_xlabel("q")
     ax.set_ylabel("p")
 
-    ani = animation.FuncAnimation(fig, animate, frames=N, interval=100, blit=True,
+    ani = animation.FuncAnimation(fig, animate, frames=N, interval=10, blit=True,
                                     fargs=(plot, t, new_qs, new_ps, omega, m, text))
+
+    # Phasenraumtrajektorien
+    q = np.linspace(-5*dq, 5*dq, int(N/2))
+    p = np.linspace(-5*dp, 5*dp, int(N/2))
+    Q, P = np.meshgrid(q, p)
+    H = P**2/(2*m)+m*omega**2*Q**2/2                                                    # Hamilton-Funktion
+    contour = ax.contour(Q, P, H, levels=[1,2,3])                                       # Levels = Energie = H
+
+    # Daten speichern
+    #np.savetxt("{}.dat".format(t[0]), np.vstack((qvals, pvals)).T, delimiter=" ", fmt='%1.2e')
+    #np.savetxt("{}.dat".format(t[int(N/2)]), np.vstack((new_qs[:, int(N/2)], new_ps[:, int(N/2)])).T, delimiter=" ", fmt='%1.2e')
+    #np.savetxt("{}.dat".format(t[int(N/10)]), np.vstack((new_qs[:, int(N/10)], new_ps[:, int(N/10)])).T, delimiter=" ", fmt='%1.2e')
 
     plt.show()
 
