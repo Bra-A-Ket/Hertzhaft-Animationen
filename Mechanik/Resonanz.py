@@ -94,8 +94,8 @@ def main():
     Omegamax = np.sqrt(omega0max**2 - 2*gammamin**2)                                    # Max. Erregerfrequenz in [Hz]
 
     # Initialisiere Plotfenster
-    fig = plt.figure()
-    fig.canvas.set_window_title("Mechanik/Resonanz.py")
+    fig = plt.figure("Mechanik/Resonanz.py")
+    #fig.canvas.set_window_title("Mechanik/Resonanz.py")
     ax1 = fig.add_subplot(121)
     ax2 = fig.add_subplot(122)
     fig.tight_layout(pad=4)                                                             # Platz zwischen Subplots

@@ -118,8 +118,8 @@ def main():
     for lab, val in zip(labels, values):
         print(lab, " = ", val)
 
-    fig = plt.figure(figsize=(10,5))
-    fig.canvas.set_window_title("Mechanik/RotierendePerle.py")
+    fig = plt.figure("Mechanik/RotierendePerle.py", figsize=(10,5))
+    #fig.canvas.set_window_title("Mechanik/RotierendePerle.py")
     ax1 = fig.add_subplot(121, aspect="equal")
     ax2 = fig.add_subplot(122)
     fig.tight_layout(pad=4)                                                             # Platz zwischen Subplots

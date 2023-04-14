@@ -66,8 +66,8 @@ def main():
     u = alpha0*Y + beta0*X
     v = beta0*Y
 
-    fig = plt.figure()
-    fig.canvas.set_window_title("Rechenmethoden/DivRot.py")
+    fig = plt.figure("Rechenmethoden/DivRot.py")
+    #fig.canvas.set_window_title("Rechenmethoden/DivRot.py")
     ax = fig.add_subplot(111, aspect="equal")
     # Waehle richtige Relation entsprechend dem Signum vom normierten alpha/beta aus der Liste aus
     list = ["= 0", "> 0", "< 0"]

@@ -175,8 +175,8 @@ def main():
         print(lab, " = ", val)
 
     # Initialisiere Plotfenster
-    fig = plt.figure(figsize=(10,5))
-    fig.canvas.set_window_title("Mechanik/Doppelpendel.py")
+    fig = plt.figure("Mechanik/Doppelpendel.py", figsize=(10,5))
+    #fig.canvas.set_window_title("Mechanik/Doppelpendel.py")
     ax = fig.add_subplot(111, aspect="equal")
     fig.subplots_adjust(bottom=0.3)                                                     # Platz fuer Regler
 

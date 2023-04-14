@@ -74,8 +74,8 @@ def main():
     for lab, val in zip(labels, values):
         print(lab, " = ", val)
 
-    fig = plt.figure(figsize=(10,5))
-    fig.canvas.set_window_title("Mechanik/SchraegerWurf.py")
+    fig = plt.figure("Mechanik/SchraegerWurf.py", figsize=(10,5))
+    #fig.canvas.set_window_title("Mechanik/SchraegerWurf.py")
     ax1 = fig.add_subplot(121)
     ax2 = fig.add_subplot(122)
     fig.tight_layout(pad=2)                                                             # Platz zwischen Subplots

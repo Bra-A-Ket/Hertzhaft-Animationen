@@ -58,8 +58,8 @@ def main():
         func = plots[i-1] + derivatives[i]*(xarr-x0)**i / np.math.factorial(i)
         plots.append(func)
 
-    fig = plt.figure()
-    fig.canvas.set_window_title("Rechenmethoden/TaylorPolynome.py")
+    fig = plt.figure("Rechenmethoden/TaylorPolynome.py")
+    #fig.canvas.set_window_title("Rechenmethoden/TaylorPolynome.py")
     ax = fig.add_subplot(111)
     fig.subplots_adjust(bottom=0.25)                                                    # Platz fuer Regler
 

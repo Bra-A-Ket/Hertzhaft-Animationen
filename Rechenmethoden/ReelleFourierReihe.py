@@ -120,8 +120,8 @@ def main():
 
     t, fourier, all_fourier = real_fourier_series(f, Nmax, T, N, retAll=True)
 
-    fig = plt.figure()
-    fig.canvas.set_window_title("Rechenmethoden/ReelleFourierReihe.py")
+    fig = plt.figure("Rechenmethoden/ReelleFourierReihe.py")
+    #fig.canvas.set_window_title("Rechenmethoden/ReelleFourierReihe.py")
     ax = fig.add_subplot(111)
     fig.subplots_adjust(bottom=0.25)                                                     # Platz fuer Regler
     ax.set_xlim([-T/2, T/2])

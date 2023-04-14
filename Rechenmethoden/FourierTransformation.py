@@ -42,8 +42,8 @@ def main():
 
     limits = [xmin, xmax, xmin_ft, xmax_ft]
 
-    fig = plt.figure()
-    fig.canvas.set_window_title("Rechenmethoden/FourierTransformation.py")
+    fig = plt.figure("Rechenmethoden/FourierTransformation.py")
+    #fig.canvas.set_window_title("Rechenmethoden/FourierTransformation.py")
     ax1 = fig.add_subplot(121)
     ax2 = fig.add_subplot(122)
     fig.tight_layout(pad=5)                                                             # Platz zwischen Subplots

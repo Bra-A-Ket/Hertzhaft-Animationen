@@ -132,8 +132,8 @@ def main():
     new_ps = np.array(new_ps)
 
     # Initialisiere Plotfenster
-    fig = plt.figure()
-    fig.canvas.set_window_title("Mechanik/LiouvilleTheorem.py")
+    fig = plt.figure("Mechanik/LiouvilleTheorem.py")
+    #fig.canvas.set_window_title("Mechanik/LiouvilleTheorem.py")
     ax = fig.add_subplot(111, aspect="equal")
 
     # Plot1

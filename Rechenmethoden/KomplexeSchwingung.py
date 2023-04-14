@@ -60,8 +60,8 @@ def main():
                                                                                         # perioden, xarr = xarr[:N]
 
     # Plotfenster
-    fig = plt.figure()
-    fig.canvas.set_window_title("Rechenmethoden/KomplexeSchwingung.py")
+    fig = plt.figure("Rechenmethoden/KomplexeSchwingung.py")
+    #fig.canvas.set_window_title("Rechenmethoden/KomplexeSchwingung.py")
     plt.title(r"Links: $E(t)=E_0\mathrm{e}^{\mathrm{i}\omega t}$, Rechts: $\mathrm{Re}[E(t)]=E_0\cos(\omega t)$")
     plt.axis("off")
     ax1 = fig.add_subplot(121, aspect="equal")

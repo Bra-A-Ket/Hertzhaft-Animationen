@@ -61,8 +61,8 @@ def main():
     for lab, val in zip(labels, values):
         print(lab, " = ", val)
 
-    fig = plt.figure()
-    fig.canvas.set_window_title("Rechenmethoden/LustigeKreise.py")
+    fig = plt.figure("Rechenmethoden/LustigeKreise.py")
+    #fig.canvas.set_window_title("Rechenmethoden/LustigeKreise.py")
     plt.axis("off")
     ax = fig.add_subplot(111, aspect="equal")
     fig.subplots_adjust(bottom=0.3)                                                     # Platz fuer Regler

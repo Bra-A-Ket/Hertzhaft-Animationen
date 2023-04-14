@@ -49,8 +49,8 @@ def main():
     integral = integrate(y, (x, xmin, xmax))                                            # exaktes Integral
 
     # Plot initiieren
-    fig = plt.figure()
-    fig.canvas.set_window_title("Rechenmethoden/RiemannIntegral.py")
+    fig = plt.figure("Rechenmethoden/RiemannIntegral.py")
+    #fig.canvas.set_window_title("Rechenmethoden/RiemannIntegral.py")
     ax = fig.add_subplot(111)
     fig.subplots_adjust(bottom=0.35)                                                    # Platz fuer Regler
 

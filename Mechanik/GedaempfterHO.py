@@ -93,8 +93,8 @@ def main():
     t = np.linspace(t0, T, N)
 
     # Initialisiere Plotfenster
-    fig = plt.figure()
-    fig.canvas.set_window_title("Mechanik/GedaempfterHO.py")
+    fig = plt.figure("Mechanik/GedaempfterHO.py")
+    #fig.canvas.set_window_title("Mechanik/GedaempfterHO.py")
     ax1 = fig.add_subplot(111)
     ax2 = ax1.twinx()                                                                   # Zweite y-Achse
     fig.subplots_adjust(bottom=0.35)                                                    # Platz fuer Regler

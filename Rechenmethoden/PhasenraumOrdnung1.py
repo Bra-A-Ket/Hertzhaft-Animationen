@@ -181,8 +181,8 @@ def main():
     u = np.ones_like(X) / np.sqrt(1 + (f(T, X))**2)
     v = f(T, X) / np.sqrt(1 + (f(T, X))**2)
 
-    fig = plt.figure()
-    fig.canvas.set_window_title("Rechenmethoden/PhasenraumOrdnung1.py")
+    fig = plt.figure("Rechenmethoden/PhasenraumOrdnung1.py")
+    #fig.canvas.set_window_title("Rechenmethoden/PhasenraumOrdnung1.py")
     ax = fig.add_subplot(111)
     fig.subplots_adjust(bottom=0.3)                                                     # Platz fuer Regler
     ax.set_xlim([tmin, tmax])

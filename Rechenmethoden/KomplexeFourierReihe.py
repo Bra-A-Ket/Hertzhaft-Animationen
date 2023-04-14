@@ -154,8 +154,8 @@ def main():
 
     time, all_fourier = complex_fourier_series(func, iter, T, N)
 
-    fig = plt.figure()
-    fig.canvas.set_window_title("Rechenmethoden/KomplexeFourierReihe.py")
+    fig = plt.figure("Rechenmethoden/KomplexeFourierReihe.py")
+    #fig.canvas.set_window_title("Rechenmethoden/KomplexeFourierReihe.py")
     ax = fig.add_subplot(111, aspect="equal")
     ax.set_title("Komplexe Fourier-Reihe")
     ax.plot(func(time).real, func(time).imag, zorder=-1)

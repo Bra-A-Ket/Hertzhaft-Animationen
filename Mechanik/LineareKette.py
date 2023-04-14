@@ -315,8 +315,8 @@ def main():
     t = np.linspace(0, tmax, N)
 
     # Initialisiere Plotfenster
-    fig = plt.figure(figsize=(10,5))
-    fig.canvas.set_window_title("Mechanik/LineareKette.py")
+    fig = plt.figure("Mechanik/LineareKette.py", figsize=(10,5))
+    #fig.canvas.set_window_title("Mechanik/LineareKette.py")
     ax1 = fig.add_subplot(121, aspect="equal")
     ax2 = fig.add_subplot(122)
     fig.subplots_adjust(bottom=0.3)                                                     # Platz fuer Regler

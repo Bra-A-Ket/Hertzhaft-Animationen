@@ -141,8 +141,8 @@ def main():
     E_kin = (m/2) * (-omega*x_max*np.sin(omega*t))**2
 
     # Initialisiere Plotfenster
-    fig = plt.figure(figsize=(10,5))
-    fig.canvas.set_window_title("Mechanik/HarmonischerOszillator.py")
+    fig = plt.figure("Mechanik/HarmonischerOszillator.py", figsize=(10,5))
+    #fig.canvas.set_window_title("Mechanik/HarmonischerOszillator.py")
     ax1 = fig.add_subplot(221)
     ax2 = fig.add_subplot(222)
     ax3 = fig.add_subplot(223, aspect="equal")
