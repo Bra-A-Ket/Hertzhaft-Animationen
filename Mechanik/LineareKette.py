@@ -225,29 +225,29 @@ def animate(i, xm1_ac, ym1_ac, x0_ac, y0_ac, x1_ac, xm1_op, ym1_op, x0_op, y0_op
 
     # Federn
     x, y = nodes(num, xm1_ac[i], ym1_ac[i], h)                                          # Unterer Dispersionsast
-    springs[0].set_xdata(x)
-    springs[0].set_ydata(y-2)
+    springs[0].set_xdata([x])
+    springs[0].set_ydata([y-2])
     x, y = nodes(num, ym1_ac[i], x0_ac[i], h)
-    springs[1].set_xdata(x)
-    springs[1].set_ydata(y-2)
+    springs[1].set_xdata([x])
+    springs[1].set_ydata([y-2])
     x, y = nodes(num, x0_ac[i], y0_ac[i], h)
-    springs[2].set_xdata(x)
-    springs[2].set_ydata(y-2)
+    springs[2].set_xdata([x])
+    springs[2].set_ydata([y-2])
     x, y = nodes(num, y0_ac[i], x1_ac[i], h)
-    springs[3].set_xdata(x)
-    springs[3].set_ydata(y-2)
+    springs[3].set_xdata([x])
+    springs[3].set_ydata([y-2])
     x, y = nodes(num, xm1_op[i], ym1_op[i], h)                                          # Oberer Dispersionsast
-    springs[4].set_xdata(x)
-    springs[4].set_ydata(y+2)
+    springs[4].set_xdata([x])
+    springs[4].set_ydata([y+2])
     x, y = nodes(num, ym1_op[i], x0_op[i], h)
-    springs[5].set_xdata(x)
-    springs[5].set_ydata(y+2)
+    springs[5].set_xdata([x])
+    springs[5].set_ydata([y+2])
     x, y = nodes(num, x0_op[i], y0_op[i], h)
-    springs[6].set_xdata(x)
-    springs[6].set_ydata(y+2)
+    springs[6].set_xdata([x])
+    springs[6].set_ydata([y+2])
     x, y = nodes(num, y0_op[i], x1_op[i], h)
-    springs[7].set_xdata(x)
-    springs[7].set_ydata(y+2)
+    springs[7].set_xdata([x])
+    springs[7].set_ydata([y+2])
     for spring in springs:
         spring.set_visible(True)
 
@@ -399,12 +399,12 @@ def main():
         m = mSlider.val
         pval = pSlider.val
         omega_plus, omega_minus = omega(p, k, m, M)
-        minus.set_ydata(omega_minus)
-        plus.set_ydata(omega_plus)
-        dot_ac.set_xdata(pval)
-        dot_ac.set_ydata(omega(pval, k, m, M)[1])
-        dot_op.set_xdata(pval)
-        dot_op.set_ydata(omega(pval, k, m, M)[0])
+        minus.set_ydata([omega_minus])
+        plus.set_ydata([omega_plus])
+        dot_ac.set_xdata([pval])
+        dot_ac.set_ydata([omega(pval, k, m, M)[1]])
+        dot_op.set_xdata([pval])
+        dot_op.set_ydata([omega(pval, k, m, M)[0]])
 
     def start(val):
         """Startet Animation auf Klick des Start-Buttons

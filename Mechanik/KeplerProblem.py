@@ -217,7 +217,10 @@ def main():
         """Wird aufgerufen, wenn Slider bewegt werden. Berechnet Bahnkurven neu
         """
 
-        ax.lines = []                                                                   # Loesche vorherige Plots
+        #ax.lines = []                                                                   # Loesche vorherige Plots
+        for i in range(len(ax.lines)):
+            line = ax.lines[-1]
+            line.remove()
         p = pSlider.val
         epsilon = epsilonSlider.val
         m = massratioSlider.val

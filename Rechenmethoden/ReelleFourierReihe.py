@@ -138,7 +138,7 @@ def main():
         """
 
         i = orderSlider.val
-        plot.set_ydata(all_fourier[int(i)])
+        plot.set_ydata([all_fourier[int(i)]])
         fig.canvas.draw_idle()
 
     orderSlider.on_changed(update)

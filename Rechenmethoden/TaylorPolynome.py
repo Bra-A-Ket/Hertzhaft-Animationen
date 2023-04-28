@@ -74,7 +74,7 @@ def main():
         """
 
         i = orderSlider.val
-        taylor.set_ydata(plots[int(i)])
+        taylor.set_ydata([plots[int(i)]])
         ax.set_title(r"Taylor-Polynom fuer $N={}$".format(int(i)))
         fig.canvas.draw_idle()
 

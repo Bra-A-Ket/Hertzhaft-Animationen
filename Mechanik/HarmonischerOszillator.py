@@ -220,7 +220,10 @@ def main():
         k = kSlider.val
 
         # Loesche Plots, aber nicht patches
-        ax3.lines = []
+        #ax3.lines = []
+        for i in range(len(ax3.lines)):
+            line = ax3.lines[-1]
+            line.remove()
 
         # Berechne Loesung x(t) mit neuen Parametern
         x_max = np.sqrt(2*E/k)
@@ -233,22 +236,22 @@ def main():
         E_kin = (m/2) * (-omega*x_max*np.sin(omega*t))**2
 
         # Plot fuer Diagramm links oben
-        x_t_plot.set_xdata(t)
-        x_t_plot.set_ydata(x)
-        T_plot.set_xdata(T)
-        ax1Dot.set_xdata(t[0])
-        ax1Dot.set_ydata(x[0])
+        x_t_plot.set_xdata([t])
+        x_t_plot.set_ydata([x])
+        T_plot.set_xdata([T])
+        ax1Dot.set_xdata([t[0]])
+        ax1Dot.set_ydata([x[0]])
 
         # Plot fuer Diagramm rechts oben
-        E_kin_plot.set_xdata(t)
-        E_kin_plot.set_ydata(E_kin)
-        V_plot.set_xdata(t)
-        V_plot.set_ydata(V)
-        T_ax2_plot.set_xdata(T)
-        ax2EDot.set_xdata(t[0])
-        ax2EDot.set_ydata(E_kin[0])
-        ax2VDot.set_xdata(t[0])
-        ax2VDot.set_ydata(V[0])
+        E_kin_plot.set_xdata([t])
+        E_kin_plot.set_ydata([E_kin])
+        V_plot.set_xdata([t])
+        V_plot.set_ydata([V])
+        T_ax2_plot.set_xdata([T])
+        ax2EDot.set_xdata([t[0]])
+        ax2EDot.set_ydata([E_kin[0]])
+        ax2VDot.set_xdata([t[0]])
+        ax2VDot.set_ydata([V[0]])
 
         # Plot fuer Diagramm links unten
         ax3.axvline(-1.2*scale*xmax, c="k", lw=6)
@@ -259,10 +262,10 @@ def main():
         ax3.plot(xpos, ypos, c="k")
 
         # Plot fuer Diagramm rechts unten
-        parabular.set_xdata(x)
-        parabular.set_ydata(V)
-        ax4Dot.set_xdata(x[0])
-        ax4Dot.set_ydata(V[0])
+        parabular.set_xdata([x])
+        parabular.set_ydata([V])
+        ax4Dot.set_xdata([x[0]])
+        ax4Dot.set_ydata([V[0]])
 
         # Problem: "Massenpunkt" ax3Circle wird im Default-Plot bereits abgebildet. Animation uber animate->verschiebe
         # Mittelpunkt vom Kreis erstellt neue Kopie von ax3Circle, loescht aber nicht den nicht-animierten/nicht-bewegten
@@ -344,15 +347,15 @@ def main():
         spring, = ax3.plot(xpos, ypos, c="k")
 
         # Plot fuer Diaramm links oben
-        ax1Dot.set_xdata(t[i])
-        ax1Dot.set_ydata(x[i])
+        ax1Dot.set_xdata([t[i]])
+        ax1Dot.set_ydata([x[i]])
         ax1Dot.set_visible(True)
 
         # Plot fuer Diagramm rechts oben
-        ax2EDot.set_xdata(t[i])
-        ax2EDot.set_ydata(E_kin[i])
-        ax2VDot.set_xdata(t[i])
-        ax2VDot.set_ydata(V[i])
+        ax2EDot.set_xdata([t[i]])
+        ax2EDot.set_ydata([E_kin[i]])
+        ax2VDot.set_xdata([t[i]])
+        ax2VDot.set_ydata([V[i]])
         ax2EDot.set_visible(True)
         ax2VDot.set_visible(True)
 
@@ -361,11 +364,11 @@ def main():
         ax3Circle.set_visible(True)
 
         # Plot fuer Diagramm rechts unten
-        ax4Dot.set_xdata(x[i])
-        ax4Dot.set_ydata(V[i])
+        ax4Dot.set_xdata([x[i]])
+        ax4Dot.set_ydata([V[i]])
         ax4Dot.set_visible(True)
 
-        return ax3Circle, spring, ax1Dot, ax2EDot, ax2VDot, ax4Dot
+        return ax3Circle, spring, ax1Dot, ax2EDot, ax2VDot, ax4Dot,
 
     def start(val):
         """Startet Animation auf Klick des Start-Buttons
@@ -382,7 +385,10 @@ def main():
         ax2VDot.set_visible(False)                                                      # Verstecke nicht-animiertes Original
         ax4Dot.set_visible(False)                                                      # Verstecke nicht-animiertes Original
 
-        ax3.lines = []                                                                  # verstecke nicht-animiertes Original
+        #ax3.lines = []                                                                  # verstecke nicht-animiertes Original
+        #for i in range(len(ax3.lines)):
+        #    line = ax3.lines[-1]
+        #    line.remove()
         ax3.axvline(-1.2*scale*xmax, c="k", lw=6)                                       # Wand wieder darstellen
 
         m = mSlider.val

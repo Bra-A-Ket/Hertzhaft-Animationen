@@ -124,14 +124,20 @@ def main():
         alpha = alphaSlider.val
         v0 = v0Slider.val
 
-        ax1.lines = []
+        #ax1.lines = []
+        for i in range(len(ax1.lines)):
+            line = ax1.lines[-1]
+            line.remove()
 
         L = v0**2*np.sin(2*alpha*np.pi/180) / g
         x = np.linspace(0, 1.05*L, N)
 
         ax1.plot(x, z(x, alpha, v0, g), c="orange")
 
-        ax2.lines = []
+        #ax2.lines = []
+        for i in range(len(ax2.lines)):
+            line = ax2.lines[-1]
+            line.remove()
 
         t = np.linspace(0, L/(v0*np.cos(alpha*np.pi/180)), N)
         ax2.set_xlim([0, t[-1]])

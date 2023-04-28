@@ -155,8 +155,8 @@ def main():
 
         # Plot 1
         amplitude = 1 / np.sqrt((omega0**2*(x**2-1))**2 + omega0**2*4*gamma**2*x**2)
-        x_plot.set_ydata(x_t)
-        amp_plot.set_ydata(amplitude)
+        x_plot.set_ydata([x_t])
+        amp_plot.set_ydata([amplitude])
         resonance_freq = np.sqrt(omega0**2 - 2*gamma**2)
         ax1.set_title(r"Getriebener HO ($\Omega_+={0:1.1f}$ Hz)".format(resonance_freq))
         xmax = np.max([np.abs(np.max(x_t)), np.abs(np.min(x_t))])
@@ -167,8 +167,8 @@ def main():
         ampmin = np.min(amplitude)
         ax2.set_ylim([ampmin, ampmax])
         value = 1 / np.sqrt((omega0**2*((Omega/omega0)**2-1))**2 + omega0**2*4*gamma**2*(Omega/omega0)**2)
-        dot.set_xdata(Omega/omega0)
-        dot.set_ydata(value)
+        dot.set_xdata([Omega/omega0])
+        dot.set_ydata([value])
 
         fig.canvas.draw_idle()
 

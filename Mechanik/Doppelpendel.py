@@ -139,14 +139,14 @@ def animate(i, theta1_t, theta2_t, l1, l2, line1, line2, trace, eraseTrace):
     line2.set_visible(True)
     if eraseTrace:
         if i > 100:
-            trace.set_xdata(x2[i-100:i])
-            trace.set_ydata(y2[i-100:i])
+            trace.set_xdata([x2[i-100:i]])
+            trace.set_ydata([y2[i-100:i]])
         else:
-            trace.set_xdata(x2[:i])
-            trace.set_ydata(y2[:i])
+            trace.set_xdata([x2[:i]])
+            trace.set_ydata([y2[:i]])
     else:
-        trace.set_xdata(x2[:i])
-        trace.set_ydata(y2[:i])
+        trace.set_xdata([x2[:i]])
+        trace.set_ydata([y2[:i]])
 
     return line1, line2, trace,
 
@@ -218,8 +218,8 @@ def main():
         line1.set_ydata([0, y1])
         line2.set_xdata([x1, x2])
         line2.set_ydata([y1, y2])
-        trace.set_xdata(x2)
-        trace.set_ydata(y2)
+        trace.set_xdata([x2])
+        trace.set_ydata([y2])
 
     def start(val):
         """Startet Animation auf Klick des Start-Buttons

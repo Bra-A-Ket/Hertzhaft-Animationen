@@ -22,6 +22,7 @@ Nutzung:
 
 import numpy as np
 from matplotlib import pyplot as plt
+from matplotlib import artist as art
 from sympy import *
 from matplotlib.widgets import Slider, RadioButtons
 
@@ -93,7 +94,9 @@ def main():
     def update(val):
         """Wird aufgerufen, wenn Slider bewegt werden.
         """
-        ax.lines.pop(-1)
+        #ax.lines.pop(-1)
+        line = ax.lines[-1]
+        line.remove()
         i = int(orderSlider.val)
         if radio.value_selected == "Untersumme":
             ax.step(xarrUntersumme[i], plotsUntersumme[i], where="post", c="orange")
@@ -111,7 +114,9 @@ def main():
 
     def radiobuttonFunc(label):
         orderSlider.reset()
-        ax.lines.pop(-1)
+        #ax.lines.pop(-1)
+        line = ax.lines[-1]
+        line.remove()
         if radio.value_selected == "Untersumme":
             ax.step(xarrUntersumme[0], plotsUntersumme[0], where="post", c="orange")
         else:

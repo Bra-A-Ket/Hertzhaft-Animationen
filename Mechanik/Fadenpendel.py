@@ -82,12 +82,12 @@ def mouse_move_event(event, ax, lSlider):
     if event.button == 1 and event.inaxes == ax and mode == "":
         try:                                                                            # Falls Animation laeuft, stoppen
             anim.event_source.stop()                                                    # und Pendel neu initialisieren
-            ax1.patches = []
-            ax1.lines = []
-            ax1.axhline(0, c="k", lw=3)
+            ax.patches = []
+            ax.lines = []
+            ax.axhline(0, c="k", lw=3)
             x = l*np.sin(deg_to_rad(phi0))
             y = -l*np.cos(deg_to_rad(phi0))
-            rod, = ax1.plot([0, x], [0, y], c="k", zorder=0)
+            rod, = ax.plot([0, x], [0, y], c="k", zorder=0)
             mass = plt.Circle((x, y), radius=.05, fc="C0", zorder=1)
             ax.add_patch(mass)
         except:
@@ -155,8 +155,8 @@ def mouse_release_event(event, fig, ax1, ax2, g, lSlider, t, approx, exact, dot)
         phi_dot_t = y[:, 1]
 
         omega = np.sqrt(g/l)
-        approx.set_ydata(rad_to_deg(phi0)*np.cos(omega*t))
-        exact.set_ydata(rad_to_deg(phi_t))
+        approx.set_ydata([rad_to_deg(phi0)*np.cos(omega*t)])
+        exact.set_ydata([rad_to_deg(phi_t)])
 
         N = len(t)
         massCirlce.set_visible(False)
@@ -228,7 +228,7 @@ def animate(i, t, phi_t, massCirlce, l, line, dot):
     line.set_ydata([0, y])
     line.set_visible(True)
 
-    dot.set_xdata(t[i])
+    dot.set_xdata([t[i]])
     dot.set_ydata([rad_to_deg(phi_t[i])])
 
     return massCirlce, line, dot,
@@ -317,9 +317,9 @@ def main():
         y = odeint(deriv, y0, t, args=(g, l))
         phi_t = y[:, 0]
         phi_dot_t = y[:, 1]
-        exact.set_ydata(rad_to_deg(phi_t))
+        exact.set_ydata([rad_to_deg(phi_t)])
 
-        dot.set_ydata(rad_to_deg(phi_t[0]))
+        dot.set_ydata([rad_to_deg(phi_t[0])])
 
     def update_ySlider(val):
         """Updatefunktion fuer rechten Slider, der nicht die Animation stoppt

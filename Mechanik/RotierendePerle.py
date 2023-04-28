@@ -95,8 +95,8 @@ def animate(i, omega, t, r_t, x_t, y_t, line, mass, dot):
 
     # Animation der roten Punkte
     mass.center = (x_t[i], y_t[i])
-    dot.set_xdata(t[i])
-    dot.set_ydata(r_t[i])
+    dot.set_xdata([t[i]])
+    dot.set_ydata([r_t[i]])
 
     return line, mass, dot,
 
