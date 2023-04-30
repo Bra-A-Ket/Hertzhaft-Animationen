@@ -17,11 +17,12 @@ Details zur jeweiligen Animation werden in der Konsole bei Ausführung vom Code
 angezeigt.
 ## Wie funktioniert es?
 Du benötigst:
-- Python 3
-- Matplotlib
-- NumPy
-- SciPy
-- SymPy
+- Python 3 (v3.11.3)
+- Matplotlib (v3.7.1)
+- NumPy (v1.24.2)
+- SciPy (v1.10.1)
+- SymPy (v1.11.1)
+(Im Klammern steht die jeweilige Version mit der die Animationen programmiert wurde. Das könnte evtl. relevant für die Ausführbarkeit sein.)
 
 Du kannst direkt [Python](https://www.python.org) mit Version 3 auf deinem
 Betriebssystem installieren. Achte im Installationsmenü darauf, dass du pip
