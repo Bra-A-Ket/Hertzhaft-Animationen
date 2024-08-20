@@ -1,20 +1,7 @@
 # Hertzhaft-Animationen
-Eine Bibliothek an Python-Animationen begleitent zu Hertzhaft Buchreihe.
+Eine Bibliothek an Python-Animationen.
 ![Beispiel](https://github.com/Bra-A-Ket/Hertzhaft-Animationen/blob/main/Beispiel.gif)
-## Was nützt das?
-Man soll nicht nur hübsche Bildchen im Buch anschauen müssen, sondern kann sich
-der Technik bedienen und in Animationen sehen, wie ein physikalischer Prozess
-abläuft. Weiterhin sind auch live Einstellmöglichkeiten in den Animationen
-gegeben, z.B. durch verstellbare Slider, die System-relevante Parameter ändern.
-Dadurch kann man direkt live in der Animation den Einfluss der Parameter
-beobachten und physikalische Intuition aufbauen.
-## Aufbau
-Der Aufbau dieser Bibliothek ist so ziemlich offensichtlich. Jeder Band ist als
-Ordner vertreten. In diesem Ordner lagern dann die verschiedenen Python-Datein
-und warten darauf ausgeführt zu werden.
 
-Details zur jeweiligen Animation werden in der Konsole bei Ausführung vom Code
-angezeigt.
 ## Wie funktioniert es?
 Du benötigst:
 - Python 3 (v3.11.3)
